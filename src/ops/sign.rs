@@ -11,9 +11,9 @@ pub trait Signed: AbsoluteValue {
 
     /// Returns `true` if `self` is positive, including `+0.0`,
     /// `Float::infinity()`, and `f64::NAN`.
-    fn is_positive(self) -> bool;
+    fn is_sign_positive(self) -> bool;
 
     /// Returns `true` if `self` is negative, including `-0.0`,
     /// `Float::neg_infinity()`, and `-f64::NAN`.
-    fn is_negative(self) -> bool;
+    fn is_sign_negative(self) -> bool;
 }
