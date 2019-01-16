@@ -1,5 +1,31 @@
-pub mod checked;
-pub mod inv;
-pub mod mul_add;
-pub mod saturating;
-pub mod wrapping;
+mod abs;
+mod angles;
+mod bitwise;
+mod bounded;
+mod epsilon;
+mod exp;
+mod float;
+mod hyp;
+mod id;
+mod inv;
+mod log;
+mod mul_add;
+mod sign;
+mod trig;
+
+pub use self::abs::*;
+pub use self::angles::*;
+pub use self::bitwise::*;
+pub use self::bounded::*;
+pub use self::epsilon::*;
+pub use self::exp::*;
+pub use self::float::*;
+pub use self::hyp::*;
+pub use self::id::*;
+pub use self::inv::*;
+pub use self::log::*;
+pub use self::mul_add::*;
+pub use self::sign::*;
+pub use self::trig::*;
+
+pub use std::ops::*;
