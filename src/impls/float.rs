@@ -1,8 +1,8 @@
-use std::mem;
-use std::num::FpCategory;
+use super::super::ops::*;
 use std::f32;
 use std::f64;
-use super::super::ops::*;
+use std::mem;
+use std::num::FpCategory;
 
 macro_rules! float_impl {
     ($t:ident $decode:ident) => {

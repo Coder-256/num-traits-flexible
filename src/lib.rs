@@ -11,6 +11,6 @@
 #![warn(clippy::all)]
 #![doc(html_root_url = "https://docs.rs/num-traits")]
 
-pub mod ops;
 mod impls;
+pub mod ops;
 pub use impls::*;

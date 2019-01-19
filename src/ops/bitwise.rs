@@ -85,7 +85,7 @@ pub trait Bitwise {
 
     /// Return the memory representation of this integer as a byte array in
     /// native byte order.
-    /// 
+    ///
     /// As the target platform's native endianness is used, portable code should
     /// use `to_be_bytes` or `to_le_bytes`, as appropriate, instead.
     fn to_ne_bytes(self) -> Self::Bytes;
@@ -100,7 +100,7 @@ pub trait Bitwise {
 
     /// Create an integer value from its memory representation as a byte array
     /// in native endianness.
-    /// 
+    ///
     /// As the target platform's native endianness is used, portable code likely
     /// wants to use from_be_bytes or from_le_bytes, as appropriate instead.
     fn from_ne_bytes(bytes: Self::Bytes) -> Self;
