@@ -1,9 +1,13 @@
+pub trait UnsignedExponential {
+    fn pow(self, exp: u32) -> Self;
+}
+
 /// Exponential functions.
 pub trait Exponential {
     /// Raise a number to an integer power.
     ///
     /// Using this function is generally faster than using `powf`
-    fn powi(self, n: i32) -> Self;
+    fn powi(self, exp: i32) -> Self;
 
     /// Take the square root of a number.
     ///
@@ -34,5 +38,5 @@ pub trait Exponential {
 
 pub trait ExponentialFloat {
     /// Raise a number to a floating point power.
-    fn powf(self, n: Self) -> Self;
+    fn powf(self, exp: Self) -> Self;
 }

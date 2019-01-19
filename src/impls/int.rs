@@ -63,6 +63,12 @@ macro_rules! int_shared {
             }
         }
 
+        impl UnsignedExponential for $t {
+            forward! {
+                Self::pow(self, exp: u32) -> Self;
+            }
+        }
+
         // TODO
         // impl Exponential for $t {
         //     fn powi(self, n: i32) -> Self {
