@@ -48,7 +48,7 @@ macro_rules! int_shared {
                 Self::from_le_bytes(bytes: Self::Bytes) -> Self;
                 Self::from_ne_bytes(bytes: Self::Bytes) -> Self;
             }
-            
+
             fn signed_shl(self, n: u32) -> Self {
                 ((self as $s) << n) as $t
             }
@@ -97,7 +97,7 @@ macro_rules! int_shared {
         //         self.exp_m1()
         //     }
         // }
-        
+
         impl Zero for $t {
             fn zero() -> Self {
                 0
@@ -131,7 +131,13 @@ macro_rules! int_shared {
             }
         }
 
-        // TODO: Logarithmic
+        impl FromStrRadix for $t {
+            type ParseError = std::num::ParseIntError;
+            forward! {
+                Self::from_str_radix(src: &str,
+                    radix: u32) -> Result<Self, Self::ParseError>;
+            }
+        }
     };
 }
 

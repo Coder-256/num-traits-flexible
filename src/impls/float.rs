@@ -125,6 +125,7 @@ macro_rules! float_impl {
 
         // Self::max(self, other: Self) -> Self;
         // Self::min(self, other: Self) -> Self;
+        // TODO: FromStrRadix
     };
 }
 
