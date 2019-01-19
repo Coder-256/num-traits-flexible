@@ -6,27 +6,16 @@ use std::num::FpCategory;
 
 macro_rules! float_impl {
     ($t:ident $decode:ident) => {
-        impl FloatCore for $t {
-            constant! {
-                nan() -> $t::NAN;
-                infinity() -> $t::INFINITY;
-                neg_infinity() -> $t::NEG_INFINITY;
-                neg_zero() -> -0.0;
-                min_positive_value() -> $t::MIN_POSITIVE;
-            }
-
+        impl AbsoluteValue for $t {
             forward! {
-                Self::is_nan(self) -> bool;
-                Self::is_infinite(self) -> bool;
-                Self::is_finite(self) -> bool;
-                Self::is_normal(self) -> bool;
-                Self::classify(self) -> FpCategory;
-                Self::floor(self) -> Self;
-                Self::ceil(self) -> Self;
-                Self::round(self) -> Self;
-                Self::trunc(self) -> Self;
-                Self::fract(self) -> Self;
-                Self::recip(self) -> Self;
+                Self::abs(self) -> Self;
+            }
+        }
+
+        impl Angles for $t {
+            forward! {
+                Self::to_degrees(self) -> Self;
+                Self::to_radians(self) -> Self;
             }
         }
 
@@ -61,6 +50,41 @@ macro_rules! float_impl {
             }
         }
 
+        impl FloatCore for $t {
+            constant! {
+                nan() -> $t::NAN;
+                infinity() -> $t::INFINITY;
+                neg_infinity() -> $t::NEG_INFINITY;
+                neg_zero() -> -0.0;
+                min_positive_value() -> $t::MIN_POSITIVE;
+            }
+
+            forward! {
+                Self::is_nan(self) -> bool;
+                Self::is_infinite(self) -> bool;
+                Self::is_finite(self) -> bool;
+                Self::is_normal(self) -> bool;
+                Self::classify(self) -> FpCategory;
+                Self::floor(self) -> Self;
+                Self::ceil(self) -> Self;
+                Self::round(self) -> Self;
+                Self::trunc(self) -> Self;
+                Self::fract(self) -> Self;
+                Self::recip(self) -> Self;
+            }
+        }
+
+        impl Hyperbolic for $t {
+            forward! {
+                Self::sinh(self) -> Self;
+                Self::cosh(self) -> Self;
+                Self::tanh(self) -> Self;
+                Self::asinh(self) -> Self;
+                Self::acosh(self) -> Self;
+                Self::atanh(self) -> Self;
+            }
+        }
+
         impl Logarithmic for $t {
             forward! {
                 Self::ln(self) -> Self;
@@ -71,16 +95,21 @@ macro_rules! float_impl {
             }
         }
 
-        impl AbsoluteValue for $t {
-            forward! {
-                Self::abs(self) -> Self;
-            }
-        }
-
         impl MulAdd for $t {
             type Output = Self;
             forward! {
                 Self::mul_add(self, a: Self, b: Self) -> Self;
+            }
+        }
+
+        impl One for $t {
+            fn one() -> Self {
+                1.0
+            }
+
+            #[allow(clippy::float_cmp)]
+            fn is_one(self) -> bool {
+                self == 1.0
             }
         }
 
@@ -89,13 +118,6 @@ macro_rules! float_impl {
                 Self::signum(self) -> Self;
                 Self::is_sign_positive(self) -> bool;
                 Self::is_sign_negative(self) -> bool;
-            }
-        }
-
-        impl Angles for $t {
-            forward! {
-                Self::to_degrees(self) -> Self;
-                Self::to_radians(self) -> Self;
             }
         }
 
@@ -112,14 +134,13 @@ macro_rules! float_impl {
             }
         }
 
-        impl Hyperbolic for $t {
-            forward! {
-                Self::sinh(self) -> Self;
-                Self::cosh(self) -> Self;
-                Self::tanh(self) -> Self;
-                Self::asinh(self) -> Self;
-                Self::acosh(self) -> Self;
-                Self::atanh(self) -> Self;
+        impl Zero for $t {
+            fn zero() -> Self {
+                0.0
+            }
+
+            fn is_zero(self) -> bool {
+                self == 0.0
             }
         }
 

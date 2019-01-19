@@ -3,8 +3,8 @@ use super::super::ops::*;
 macro_rules! signed {
     ($t:ty) => {
         impl AbsoluteValue for $t {
-            fn abs(self) -> $t {
-                self.abs()
+            forward! {
+                Self::abs(self) -> Self;
             }
         }
 
@@ -70,51 +70,11 @@ macro_rules! int_shared {
             }
         }
 
-        impl UnsignedExponential for $t {
+        impl FromStrRadix for $t {
+            type ParseError = std::num::ParseIntError;
             forward! {
-                Self::pow(self, exp: u32) -> Self;
-            }
-        }
-
-        // TODO
-        // impl Exponential for $t {
-        //     fn powi(self, n: i32) -> Self {
-        //         self.pow(n as u32)
-        //     }
-        //     fn sqrt(self) -> Self {
-        //         f64::from(self).sqrt() as Self
-        //     }
-        //     fn exp(self) -> Self {
-        //         self.exp()
-        //     }
-        //     fn exp2(self) -> Self {
-        //         self.exp2()
-        //     }
-        //     fn hypot(self, other: Self) -> Self {
-        //         self.hypot(other)
-        //     }
-        //     fn exp_m1(self) -> Self {
-        //         self.exp_m1()
-        //     }
-        // }
-
-        impl Zero for $t {
-            fn zero() -> Self {
-                0
-            }
-
-            fn is_zero(self) -> bool {
-                self == 0
-            }
-        }
-
-        impl One for $t {
-            fn one() -> Self {
-                1
-            }
-
-            fn is_one(self) -> bool {
-                self == 1
+                Self::from_str_radix(src: &str,
+                    radix: u32) -> Result<Self, Self::ParseError>;
             }
         }
 
@@ -131,11 +91,29 @@ macro_rules! int_shared {
             }
         }
 
-        impl FromStrRadix for $t {
-            type ParseError = std::num::ParseIntError;
+        impl One for $t {
+            fn one() -> Self {
+                1
+            }
+
+            fn is_one(self) -> bool {
+                self == 1
+            }
+        }
+
+        impl UnsignedExponential for $t {
             forward! {
-                Self::from_str_radix(src: &str,
-                    radix: u32) -> Result<Self, Self::ParseError>;
+                Self::pow(self, exp: u32) -> Self;
+            }
+        }
+
+        impl Zero for $t {
+            fn zero() -> Self {
+                0
+            }
+
+            fn is_zero(self) -> bool {
+                self == 0
             }
         }
     };
