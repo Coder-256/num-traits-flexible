@@ -1,11 +1,14 @@
 #!/bin/sh
 # Use rustup to locally run the same suite of tests as .travis.yml.
-# (You should first install/update 1.8.0, stable, beta, and nightly.)
+# (You should first install/update stable, beta, and nightly.)
 
-set -ex
-
+set -x
 export TRAVIS_RUST_VERSION
-for TRAVIS_RUST_VERSION in 1.8.0 1.15.0 1.20.0 stable beta nightly; do
-    run="rustup run $TRAVIS_RUST_VERSION"
-    $run $PWD/ci/test_full.sh
-done
+
+run() {
+    rustup run "$TRAVIS_RUST_VERSION" ./ci/test_full.sh
+}
+
+TRAVIS_RUST_VERSION=stable run || exit $?  # Test Rust stable
+TRAVIS_RUST_VERSION=beta run || exit $?    # Test Rust beta
+TRAVIS_RUST_VERSION=nightly run            # Test Rust nightly (allow failure)
