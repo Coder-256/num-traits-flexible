@@ -9,20 +9,16 @@ macro_rules! signed {
         }
 
         impl Signed for $t {
-            fn signum(self) -> $t {
-                match self {
-                    n if n > 0 => 1,
-                    0 => 0,
-                    _ => -1,
-                }
+            forward! {
+                Self::signum(self) -> Self;
             }
 
             fn is_sign_positive(self) -> bool {
-                self > 0
+                self.is_positive()
             }
 
             fn is_sign_negative(self) -> bool {
-                self < 0
+                self.is_negative()
             }
         }
     };
