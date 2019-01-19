@@ -15,11 +15,6 @@ macro_rules! float_impl {
                 min_positive_value() -> $t::MIN_POSITIVE;
             }
 
-            #[inline]
-            fn integer_decode(self) -> (u64, i16, i8) {
-                $decode(self)
-            }
-
             forward! {
                 Self::is_nan(self) -> bool;
                 Self::is_infinite(self) -> bool;
@@ -133,32 +128,36 @@ macro_rules! float_impl {
     };
 }
 
-fn integer_decode_f32(f: f32) -> (u64, i16, i8) {
-    let bits: u32 = unsafe { mem::transmute(f) };
-    let sign: i8 = if bits >> 31 == 0 { 1 } else { -1 };
-    let mut exponent: i16 = ((bits >> 23) & 0xff) as i16;
-    let mantissa = if exponent == 0 {
-        (bits & 0x007f_ffff) << 1
-    } else {
-        (bits & 0x007f_ffff) | 0x0080_0000
-    };
-    // Exponent bias + mantissa shift
-    exponent -= 127 + 23;
-    (mantissa as u64, exponent, sign)
+impl FloatIntDecode<u32, i16> for f32 {
+    fn integer_decode(self) -> (u32, i16, i8) {
+        let bits: u32 = unsafe { mem::transmute(self) };
+        let sign: i8 = if bits >> 31 == 0 { 1 } else { -1 };
+        let mut exponent: i16 = ((bits >> 23) & 0xff) as i16;
+        let mantissa = if exponent == 0 {
+            (bits & 0x007f_ffff) << 1
+        } else {
+            (bits & 0x007f_ffff) | 0x0080_0000
+        };
+        // Exponent bias + mantissa shift
+        exponent -= 127 + 23;
+        (mantissa, exponent, sign)
+    }
 }
 
-fn integer_decode_f64(f: f64) -> (u64, i16, i8) {
-    let bits: u64 = unsafe { mem::transmute(f) };
-    let sign: i8 = if bits >> 63 == 0 { 1 } else { -1 };
-    let mut exponent: i16 = ((bits >> 52) & 0x7ff) as i16;
-    let mantissa = if exponent == 0 {
-        (bits & 0x000f_ffff_ffff_ffff) << 1
-    } else {
-        (bits & 0x000f_ffff_ffff_ffff) | 0x0010_0000_0000_0000
-    };
-    // Exponent bias + mantissa shift
-    exponent -= 1023 + 52;
-    (mantissa, exponent, sign)
+impl FloatIntDecode<u64, i16> for f64 {
+    fn integer_decode(self) -> (u64, i16, i8) {
+        let bits: u64 = unsafe { mem::transmute(self) };
+        let sign: i8 = if bits >> 63 == 0 { 1 } else { -1 };
+        let mut exponent: i16 = ((bits >> 52) & 0x7ff) as i16;
+        let mantissa = if exponent == 0 {
+            (bits & 0x000f_ffff_ffff_ffff) << 1
+        } else {
+            (bits & 0x000f_ffff_ffff_ffff) | 0x0010_0000_0000_0000
+        };
+        // Exponent bias + mantissa shift
+        exponent -= 1023 + 52;
+        (mantissa, exponent, sign)
+    }
 }
 
 float_impl!(f32 integer_decode_f32);

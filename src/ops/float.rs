@@ -50,8 +50,10 @@ pub trait FloatCore {
 
     /// Returns the reciprocal (multiplicative inverse) of the number.
     fn recip(self) -> Self;
+}
 
+pub trait FloatIntDecode<Mantissa, Exponent> {
     /// Returns the mantissa, base 2 exponent, and sign as integers, respectively.
     /// The original number can be recovered by `sign * mantissa * 2 ^ exponent`.
-    fn integer_decode(self) -> (u64, i16, i8);
+    fn integer_decode(self) -> (Mantissa, Exponent, i8);
 }
