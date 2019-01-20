@@ -5,7 +5,7 @@ use std::mem;
 use std::num::FpCategory;
 
 macro_rules! float_impl {
-    ($t:ident $decode:ident) => {
+    ($t:ident, $decode:ident, $signal:expr) => {
         impl AbsoluteValue for $t {
             forward! {
                 Self::abs(self) -> Self;
@@ -71,6 +71,10 @@ macro_rules! float_impl {
                 Self::trunc(self) -> Self;
                 Self::fract(self) -> Self;
                 Self::recip(self) -> Self;
+            }
+
+            fn is_signaling(self) -> bool {
+                (self.to_bits() & (1 << $signal)) == 0
             }
         }
 
@@ -143,10 +147,6 @@ macro_rules! float_impl {
                 self == 0.0
             }
         }
-
-        // Self::max(self, other: Self) -> Self;
-        // Self::min(self, other: Self) -> Self;
-        // TODO: FromStrRadix
     };
 }
 
@@ -182,5 +182,5 @@ impl FloatIntDecode<u64, i16> for f64 {
     }
 }
 
-float_impl!(f32 integer_decode_f32);
-float_impl!(f64 integer_decode_f64);
+float_impl!(f32, integer_decode_f32, 22);
+float_impl!(f64, integer_decode_f64, 51);
