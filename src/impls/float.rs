@@ -28,19 +28,12 @@ macro_rules! float_impl {
 
         impl Exponential for $t {
             forward! {
-                Self::powi(self, n: i32) -> Self;
                 Self::sqrt(self) -> Self;
                 Self::cbrt(self) -> Self;
                 Self::exp(self) -> Self;
                 Self::exp2(self) -> Self;
                 Self::hypot(self, other: Self) -> Self;
                 Self::exp_m1(self) -> Self;
-            }
-        }
-
-        impl ExponentialFloat for $t {
-            forward! {
-                Self::powf(self, n: Self) -> Self;
             }
         }
 
@@ -126,6 +119,18 @@ macro_rules! float_impl {
                 } else {
                     self
                 }
+            }
+        }
+
+        impl Power<i32> for $t {
+            fn pow(self, exp: i32) -> Self {
+                self.powi(exp)
+            }
+        }
+
+        impl Power<$t> for $t {
+            fn pow(self, exp: Self) -> Self {
+                self.powf(exp)
             }
         }
 
