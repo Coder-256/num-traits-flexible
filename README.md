@@ -13,7 +13,11 @@
 ](https://travis-ci.com/Coder-256/num-traits-flexible.svg?branch=master)
 ](https://travis-ci.com/Coder-256/num-traits-flexible)
 
-Numeric traits for generic mathematics in Rust.
+Numeric traits for generic mathematics in Rust. This project is a fork of the
+[`num-traits` crate](https://github.com/rust-num/num-traits) created to
+implement many postponed breaking changes, along with reorganizing the entire
+system of crates into individual operations to allow more flexible generic
+requirements.
 
 ## Usage
 
