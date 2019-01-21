@@ -13,7 +13,7 @@ pub trait EuclideanNorm {
     type NormOutput;
 
     /// Calculate the Euclidean norm of a number. Also known as the `L^2` norm,
-    /// magnitude, absolute value, or just "norm".
+    /// magnitude, absolute value, modulus, or just "norm".
     fn norm_euc(self) -> Self::NormOutput;
 }
 
