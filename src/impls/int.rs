@@ -1,10 +1,17 @@
 use super::super::ops::*;
+use std::num::NonZeroU8;
 
 macro_rules! signed {
     ($t:ty) => {
-        impl AbsoluteValue for $t {
-            forward! {
-                Self::abs(self) -> Self;
+        impl PNorm for $t {
+            type NormOutput = $t;
+
+            fn pnorm(self, p: NonZeroU8) -> Self::NormOutput {
+                if p.get() % 2 == 0 {
+                    self.abs()
+                } else {
+                    self
+                }
             }
         }
 
@@ -19,6 +26,18 @@ macro_rules! signed {
 
             fn is_sign_negative(self) -> bool {
                 self.is_negative()
+            }
+        }
+    };
+}
+
+macro_rules! unsigned {
+    ($t:ty) => {
+        impl PNorm for $t {
+            type NormOutput = $t;
+
+            fn pnorm(self, _: NonZeroU8) -> Self::NormOutput {
+                self
             }
         }
     };
@@ -122,6 +141,7 @@ macro_rules! int_shared {
 macro_rules! int_impl {
     ($s:ty, $u:ty, $b:ty) => {
         signed!($s);
+        unsigned!($u);
         int_shared!($s, $s, $u, $b);
         int_shared!($u, $s, $u, $b);
     };

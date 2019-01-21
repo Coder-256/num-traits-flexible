@@ -1,7 +1,5 @@
-use super::AbsoluteValue;
-
 /// Functions for signed numbers.
-pub trait Signed: AbsoluteValue {
+pub trait Signed {
     /// Returns a number that represents the sign of `self`.
     ///
     /// - `1.0` if the number is positive, `+0.0` or `Float::infinity()`

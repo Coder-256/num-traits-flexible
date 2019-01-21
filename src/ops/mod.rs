@@ -1,4 +1,3 @@
-mod abs;
 mod angles;
 mod bitwise;
 mod bounded;
@@ -11,10 +10,10 @@ mod id;
 mod inv;
 mod log;
 mod mul_add;
+mod norm;
 mod sign;
 mod trig;
 
-pub use self::abs::*;
 pub use self::angles::*;
 pub use self::bitwise::*;
 pub use self::bounded::*;
@@ -27,6 +26,7 @@ pub use self::id::*;
 pub use self::inv::*;
 pub use self::log::*;
 pub use self::mul_add::*;
+pub use self::norm::*;
 pub use self::sign::*;
 pub use self::trig::*;
 

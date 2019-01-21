@@ -2,16 +2,10 @@ use super::super::ops::*;
 use std::f32;
 use std::f64;
 use std::mem;
-use std::num::FpCategory;
+use std::num::{FpCategory, NonZeroU8};
 
 macro_rules! float_impl {
     ($t:ident, $decode:ident, $signal:expr) => {
-        impl AbsoluteValue for $t {
-            forward! {
-                Self::abs(self) -> Self;
-            }
-        }
-
         impl Angles for $t {
             forward! {
                 Self::to_degrees(self) -> Self;
@@ -114,6 +108,18 @@ macro_rules! float_impl {
             #[allow(clippy::float_cmp)]
             fn is_one(self) -> bool {
                 self == 1.0
+            }
+        }
+
+        impl PNorm for $t {
+            type NormOutput = $t;
+
+            fn pnorm(self, p: NonZeroU8) -> Self::NormOutput {
+                if p.get() % 2 == 0 {
+                    self.abs()
+                } else {
+                    self
+                }
             }
         }
 
