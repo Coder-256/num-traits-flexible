@@ -31,5 +31,3 @@ pub use self::norm::*;
 pub use self::normal::*;
 pub use self::sign::*;
 pub use self::trig::*;
-
-pub use std::ops::*;
