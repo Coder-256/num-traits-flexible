@@ -11,6 +11,7 @@ mod inv;
 mod log;
 mod mul_add;
 mod norm;
+mod normal;
 mod sign;
 mod trig;
 
@@ -27,6 +28,7 @@ pub use self::inv::*;
 pub use self::log::*;
 pub use self::mul_add::*;
 pub use self::norm::*;
+pub use self::normal::*;
 pub use self::sign::*;
 pub use self::trig::*;
 

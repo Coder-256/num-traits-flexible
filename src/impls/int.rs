@@ -3,6 +3,12 @@ use std::num::NonZeroU8;
 
 macro_rules! signed {
     ($t:ty) => {
+        impl Normalize for $t {
+            fn normalize(self) -> Self {
+                self.signum()
+            }
+        }
+
         impl PNorm for $t {
             type NormOutput = $t;
 
@@ -14,25 +20,20 @@ macro_rules! signed {
                 }
             }
         }
-
-        impl Signed for $t {
-            forward! {
-                Self::signum(self) -> Self;
-            }
-
-            fn is_sign_positive(self) -> bool {
-                self.is_positive()
-            }
-
-            fn is_sign_negative(self) -> bool {
-                self.is_negative()
-            }
-        }
     };
 }
 
 macro_rules! unsigned {
     ($t:ty) => {
+        impl Normalize for $t {
+            fn normalize(self) -> Self {
+                match self {
+                    0 => 0,
+                    _ => 1,
+                }
+            }
+        }
+
         impl PNorm for $t {
             type NormOutput = $t;
 

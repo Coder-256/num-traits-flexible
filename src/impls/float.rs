@@ -100,6 +100,12 @@ macro_rules! float_impl {
             }
         }
 
+        impl Normalize for $t {
+            fn normalize(self) -> Self {
+                self.signum()
+            }
+        }
+
         impl One for $t {
             fn one() -> Self {
                 1.0
@@ -120,14 +126,6 @@ macro_rules! float_impl {
                 } else {
                     self
                 }
-            }
-        }
-
-        impl Signed for $t {
-            forward! {
-                Self::signum(self) -> Self;
-                Self::is_sign_positive(self) -> bool;
-                Self::is_sign_negative(self) -> bool;
             }
         }
 
