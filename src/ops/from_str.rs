@@ -1,3 +1,4 @@
+/// Create a number from a string and radix.
 pub trait FromStrRadix: Sized {
     type ParseError;
 

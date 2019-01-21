@@ -12,5 +12,7 @@
 #![doc(html_root_url = "https://docs.rs/num-traits")]
 
 mod impls;
+
+/// Mathematics operations
 pub mod ops;
 pub use impls::*;

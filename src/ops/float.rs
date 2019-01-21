@@ -1,5 +1,6 @@
 use std::num::FpCategory;
 
+/// Operations for floating-point numbers.
 pub trait FloatCore {
     /// Returns positive infinity.
     fn infinity() -> Self;
@@ -60,6 +61,7 @@ pub trait FloatCore {
     fn recip(self) -> Self;
 }
 
+/// Decode a float into its mantissa, exponent, and sign.
 pub trait FloatIntDecode<Mantissa, Exponent> {
     /// Returns the mantissa, base 2 exponent, and sign as integers,
     /// respectively. The original number can be recovered by
