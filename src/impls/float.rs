@@ -57,7 +57,6 @@ macro_rules! float_impl {
                 Self::round(self) -> Self;
                 Self::trunc(self) -> Self;
                 Self::fract(self) -> Self;
-                Self::recip(self) -> Self;
             }
 
             fn is_signaling(self) -> bool {
@@ -73,6 +72,12 @@ macro_rules! float_impl {
                 Self::asinh(self) -> Self;
                 Self::acosh(self) -> Self;
                 Self::atanh(self) -> Self;
+            }
+        }
+
+        impl Inv for $t {
+            fn inv(self) -> Self {
+                self.recip()
             }
         }
 

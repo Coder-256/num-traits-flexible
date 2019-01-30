@@ -56,9 +56,6 @@ pub trait FloatCore {
 
     /// Returns the fractional part of a number.
     fn fract(self) -> Self;
-
-    /// Returns the reciprocal (multiplicative inverse) of the number.
-    fn recip(self) -> Self;
 }
 
 /// Decode a float into its mantissa, exponent, and sign.
