@@ -25,7 +25,7 @@ Add this to your `Cargo.toml`:
 
 ```toml
 [dependencies]
-num-traits = "0.2"
+num-traits = "1.0"
 ```
 
 and this to your crate root:
