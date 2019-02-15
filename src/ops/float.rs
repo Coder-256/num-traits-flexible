@@ -1,4 +1,4 @@
-use std::num::FpCategory;
+use core::num::FpCategory;
 
 /// Operations for floating-point numbers.
 pub trait FloatCore {
@@ -40,7 +40,11 @@ pub trait FloatCore {
     /// is going to be tested, it is generally faster to use the specific
     /// predicate instead.
     fn classify(self) -> FpCategory;
+}
 
+/// Operations for floating-point numbers. Implementations for `f32` and `f64`
+/// rely on `std`.
+pub trait FloatRuntime {
     /// Returns the largest integer less than or equal to a number.
     fn floor(self) -> Self;
 

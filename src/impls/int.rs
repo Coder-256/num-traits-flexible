@@ -1,5 +1,5 @@
 use super::super::ops::*;
-use std::num::NonZeroU8;
+use core::num::{NonZeroU8, ParseIntError};
 
 macro_rules! signed {
     ($t:ty) => {
@@ -13,8 +13,8 @@ macro_rules! signed {
             type NormOutput = $t;
 
             fn pnorm(self, p: NonZeroU8) -> Self::NormOutput {
-                if p.get() % 2 == 0 {
-                    self.abs()
+                if p.get() % 2 == 0 && self.is_negative() {
+                    -self
                 } else {
                     self
                 }
@@ -91,7 +91,7 @@ macro_rules! int_shared {
         }
 
         impl FromStrRadix for $t {
-            type ParseError = std::num::ParseIntError;
+            type ParseError = ParseIntError;
             forward! {
                 Self::from_str_radix(src: &str,
                     radix: u32) -> Result<Self, Self::ParseError>;

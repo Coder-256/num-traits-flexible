@@ -1,4 +1,4 @@
-/// Bitwise operations (beyond std::ops)
+/// Bitwise operations (beyond core::ops)
 pub trait Bitwise {
     /// A sequence of bytes used for the binary representation of `self`.
     type Bytes;

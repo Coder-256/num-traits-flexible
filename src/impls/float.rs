@@ -1,8 +1,8 @@
 use super::super::ops::*;
-use std::f32;
-use std::f64;
-use std::mem;
-use std::num::{FpCategory, NonZeroU8};
+use core::f32;
+use core::f64;
+use core::mem;
+use core::num::{FpCategory, NonZeroU8};
 
 macro_rules! float_impl {
     ($t:ident, $decode:ident, $signal:expr) => {
@@ -26,6 +26,7 @@ macro_rules! float_impl {
             }
         }
 
+        #[cfg(feature = "std")]
         impl Exponential for $t {
             forward! {
                 Self::sqrt(self) -> Self;
@@ -52,11 +53,6 @@ macro_rules! float_impl {
                 Self::is_finite(self) -> bool;
                 Self::is_normal(self) -> bool;
                 Self::classify(self) -> FpCategory;
-                Self::floor(self) -> Self;
-                Self::ceil(self) -> Self;
-                Self::round(self) -> Self;
-                Self::trunc(self) -> Self;
-                Self::fract(self) -> Self;
             }
 
             fn is_signaling(self) -> bool {
@@ -64,6 +60,18 @@ macro_rules! float_impl {
             }
         }
 
+        #[cfg(feature = "std")]
+        impl FloatRuntime for $t {
+            forward! {
+                Self::floor(self) -> Self;
+                Self::ceil(self) -> Self;
+                Self::round(self) -> Self;
+                Self::trunc(self) -> Self;
+                Self::fract(self) -> Self;
+            }
+        }
+
+        #[cfg(feature = "std")]
         impl Hyperbolic for $t {
             forward! {
                 Self::sinh(self) -> Self;
@@ -81,6 +89,7 @@ macro_rules! float_impl {
             }
         }
 
+        #[cfg(feature = "std")]
         impl Logarithmic for $t {
             forward! {
                 Self::ln(self) -> Self;
@@ -91,6 +100,7 @@ macro_rules! float_impl {
             }
         }
 
+        #[cfg(feature = "std")]
         impl MulAdd for $t {
             type Output = Self;
             forward! {
@@ -98,6 +108,7 @@ macro_rules! float_impl {
             }
         }
 
+        #[cfg(feature = "std")]
         impl Normalize for $t {
             fn normalize(self) -> Self {
                 self.signum()
@@ -115,6 +126,7 @@ macro_rules! float_impl {
             }
         }
 
+        #[cfg(feature = "std")]
         impl PNorm for $t {
             type NormOutput = $t;
 
@@ -127,18 +139,30 @@ macro_rules! float_impl {
             }
         }
 
+        #[cfg(feature = "std")]
         impl Power<i32> for $t {
             fn pow(self, exp: i32) -> Self {
                 self.powi(exp)
             }
         }
 
+        #[cfg(feature = "std")]
         impl Power<$t> for $t {
             fn pow(self, exp: Self) -> Self {
                 self.powf(exp)
             }
         }
 
+        #[cfg(feature = "std")]
+        impl Signed for $t {
+            forward! {
+                Self::signum(self) -> Self;
+                Self::is_sign_positive(self) -> bool;
+                Self::is_sign_negative(self) -> bool;
+            }
+        }
+
+        #[cfg(feature = "std")]
         impl Trigonometric for $t {
             forward! {
                 Self::sin(self) -> Self;
