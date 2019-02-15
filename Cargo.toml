@@ -1,24 +1,18 @@
 [package]
-authors = ["The Rust Project Developers"]
+authors = ["The Rust Project Developers", "Jacob Greenfield"]
 description = "Numeric traits for generic mathematics"
-documentation = "https://docs.rs/num-traits"
-homepage = "https://github.com/rust-num/num-traits"
+documentation = "https://docs.rs/num-traits-flexible"
+homepage = "https://github.com/Coder-256/num-traits-flexible"
 keywords = ["mathematics", "numerics"]
 categories = ["algorithms", "science", "no-std"]
-license = "MIT/Apache-2.0"
-repository = "https://github.com/rust-num/num-traits"
-name = "num-traits"
+license = "MIT"
+repository = "https://github.com/Coder-256/num-traits-flexible"
+name = "num-traits-flexible"
 version = "0.2.6"
+edition = "2018"
 readme = "README.md"
-build = "build.rs"
-exclude = ["/ci/*", "/.travis.yml", "/bors.toml"]
-
-[package.metadata.docs.rs]
-features = ["std"]
-
-[dependencies]
+exclude = ["/ci/*", "/.travis.yml"]
 
 [features]
 default = ["std"]
 std = []
-i128 = []
