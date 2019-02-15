@@ -9,4 +9,4 @@ matrix:
   fast_finish: true
 cache: cargo
 script:
-  - ./ci/test.sh
+  - RUST_VERSION="$TRAVIS_RUST_VERSION" ./ci/test.sh
