@@ -9,7 +9,7 @@
 // except according to those terms.
 
 #![warn(clippy::all)]
-#![doc(html_root_url = "https://docs.rs/num-traits")]
+#![doc(html_root_url = "https://docs.rs/num-traits-flexible")]
 #![cfg_attr(not(feature = "std"), no_std)]
 
 mod impls;
