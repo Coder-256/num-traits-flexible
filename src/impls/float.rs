@@ -2,7 +2,9 @@ use super::super::ops::*;
 use core::f32;
 use core::f64;
 use core::mem;
-use core::num::{FpCategory, NonZeroU8};
+use core::num::FpCategory;
+#[cfg(feature = "std")]
+use core::num::NonZeroU8;
 
 macro_rules! float_impl {
     ($t:ident, $decode:ident, $signal:expr) => {
