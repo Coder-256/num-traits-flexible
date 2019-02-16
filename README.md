@@ -28,12 +28,6 @@ Add this to your `Cargo.toml`:
 num-traits = "1.0"
 ```
 
-and this to your crate root:
-
-```rust
-extern crate num_traits;
-```
-
 ## Releases
 
 Release notes are available in [RELEASES.md](RELEASES.md).
